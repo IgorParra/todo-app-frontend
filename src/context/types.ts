@@ -9,7 +9,27 @@ export type UserProps = {
 	password: string;
 };
 
+export type TaskProps = {
+	id: string;
+	description: string;
+	createdAt: Date;
+	status: "pending" | "concluded";
+};
+
 export type AuthProviderProps = {
 	user: UserProps | null;
 	setUser: Dispatch<React.SetStateAction<UserProps | null>>;
+};
+
+export type TaskProviderProps = {
+	taskList: TaskProps[] | [];
+	changeASingleTaskData: (props: changeASingleTaskDataProps) => void;
+	addNewTaskToTaskList: (props: newTaskDataProps) => void;
+};
+
+export type newTaskDataProps = Pick<TaskProps, "description">;
+
+export type changeASingleTaskDataProps = {
+	taskId: string;
+	newTaskData: newTaskDataProps;
 };
