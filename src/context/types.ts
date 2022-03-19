@@ -23,8 +23,15 @@ export type AuthProviderProps = {
 
 export type TaskProviderProps = {
 	taskList: TaskProps[] | [];
-	changeASingleTaskData: (props: changeASingleTaskDataProps) => void;
-	addNewTaskToTaskList: (props: newTaskDataProps) => void;
+	changeASingleTaskData: ({
+		taskId,
+		newTaskData,
+	}: changeASingleTaskDataProps) => void;
+	addNewTaskToTaskList: ({
+		newTaskDescription,
+	}: {
+		newTaskDescription: string;
+	}) => void;
 };
 
 export type newTaskDataProps = Pick<TaskProps, "description">;
