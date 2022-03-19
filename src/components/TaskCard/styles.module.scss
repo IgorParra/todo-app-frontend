@@ -1,0 +1,41 @@
+.taskCard {
+	min-width: 17.5rem;
+	height: 8.125rem;
+	border-radius: 0.5rem;
+	padding: 1.25rem;
+
+	display: flex;
+	flex: 1;
+	background-color: var(--white);
+
+	transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+	section {
+		width: 100%;
+		height: 100%;
+
+		display: flex;
+		flex-direction: column;
+
+		header {
+			font-size: 1.3rem;
+			color: var(--gray-600);
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			resize: none;
+			border-radius: 0.3125rem;
+			align-content: flex-start;
+
+			&:disabled {
+				background-color: transparent;
+			}
+		}
+
+		p {
+			margin-top: 0.1875rem;
+			font-size: 0.7rem;
+			color: var(--gray-300);
+		}
+	}
+}

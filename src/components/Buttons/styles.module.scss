@@ -1,0 +1,53 @@
+@use "styles/_sassVariables";
+
+.moreinfo,
+.delete,
+.saveoredit {
+	width: 2rem;
+	height: 2rem;
+	border: solid 1.5px;
+	border-radius: 50%;
+	background-color: transparent;
+
+	@include sassVariables.flexAllCenter;
+}
+
+.moreinfo {
+	border-color: blue;
+	svg {
+		color: blue;
+	}
+
+	&:hover {
+		background-color: blue;
+		svg {
+			color: white;
+		}
+	}
+}
+.delete {
+	border-color: red;
+	svg {
+		color: red;
+	}
+
+	&:hover {
+		background-color: red;
+		svg {
+			color: white;
+		}
+	}
+}
+.saveoredit {
+	border-color: green;
+	svg {
+		color: green;
+	}
+
+	&:hover {
+		background-color: green;
+		svg {
+			color: white;
+		}
+	}
+}

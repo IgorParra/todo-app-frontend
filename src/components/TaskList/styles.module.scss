@@ -1,0 +1,11 @@
+@use "styles/_sassVariables";
+
+.container {
+	width: 100%;
+	margin-top: 1.875rem;
+
+	display: flex;
+	flex-wrap: wrap;
+
+	gap: 1.25rem;
+}
