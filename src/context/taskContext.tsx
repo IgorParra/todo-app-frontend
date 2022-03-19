@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import {
 	changeASingleTaskDataProps,
 	ProviderProps,
@@ -55,9 +55,6 @@ export const TaskProvider = ({ children }: ProviderProps) => {
 
 		setTaskList(newTaskList);
 	};
-	useEffect(() => {
-		console.log(taskList);
-	}, [taskList]);
 
 	return (
 		<TaskContext.Provider

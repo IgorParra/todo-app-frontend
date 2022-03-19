@@ -1,5 +1,5 @@
-import { AppProvider } from "./context";
-import { RoutePaths } from "./routes/index.routes";
+import AppProvider from "context";
+import { RoutePaths } from "routes";
 
 export const App = () => {
 	return (
