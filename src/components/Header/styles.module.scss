@@ -1,7 +1,7 @@
 @use "styles/_sassVariables";
 
 .headerContainer {
-	background: var(--blue-500);
+	background: var(--blue-300);
 	height: 12.5rem;
 	width: 100%;
 
@@ -19,15 +19,13 @@
 		transition: sassVariables.$smoothTransition;
 
 		&,
-		a {
+		img {
 			@include sassVariables.flexItemsCenter;
 		}
 
-		a {
-			img {
-				width: 7.5rem;
-				height: auto;
-			}
+		img {
+			width: 7.5rem;
+			height: auto;
 		}
 
 		@media screen and (max-width: sassVariables.$mobileWidth) {

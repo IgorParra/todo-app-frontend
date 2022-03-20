@@ -16,13 +16,26 @@
 	--gray-900: #121214;
 
 	--light-blue-50: #c9e5ff;
-	--blue-500: #285f97;
+
+	--blue-300: #285f97;
+	--blue-500: #2196f3;
+
+	--green-500: #4caf50;
+
+	--red-500: #f44336;
 
 	--max-width: 80rem;
+
+	--danger: var(--red-500);
+	--success: var(--green-500);
 }
 
 html {
 	background-color: var(--light-blue-50);
+}
+
+h1 {
+	font-size: 1.5rem;
 }
 
 html,

@@ -7,6 +7,21 @@
 	display: grid;
 	grid-template-rows: 12.5rem 1fr;
 
+	h1 {
+		padding-left: 0.3125rem;
+		color: var(--white);
+
+		@media screen and (max-width: sassVariables.$mobileWidth) {
+			text-align: center;
+		}
+	}
+
+	.taskListTitle {
+		color: var(--blue-300);
+		margin-top: 2rem;
+		text-align: left;
+	}
+
 	.taskListContainer {
 		width: 100%;
 		height: calc(100% - 12.5rem);
@@ -21,9 +36,5 @@
 		@media screen and (max-width: sassVariables.$mobileWidth) {
 			top: -4.9rem;
 		}
-	}
-
-	.taskList {
-		margin-top: 2rem;
 	}
 }

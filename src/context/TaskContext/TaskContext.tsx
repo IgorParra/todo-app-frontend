@@ -1,13 +1,13 @@
 import { createContext, useState } from "react";
-import {
-	changeASingleTaskDataProps,
-	ProviderProps,
-	TaskProps,
-	TaskProviderProps,
-} from "./types";
+import { ProviderProps } from "../types";
 import lodash from "lodash";
 import { v4 as uuidv4 } from "uuid";
 import { hasAtLeastTwoWords } from "utils/hasAtLeastTwoWords";
+import {
+	ChangeASingleTaskDataProps,
+	TaskProps,
+	TaskProviderProps,
+} from "./types";
 
 export const TaskContext = createContext({} as TaskProviderProps);
 
@@ -17,7 +17,7 @@ export const TaskProvider = ({ children }: ProviderProps) => {
 	const changeASingleTaskData = ({
 		taskId,
 		newTaskData,
-	}: changeASingleTaskDataProps) => {
+	}: ChangeASingleTaskDataProps) => {
 		const { description } = newTaskData;
 		const newTaskList = lodash.cloneDeep(taskList);
 		const tasktToUpdateIndex = newTaskList.findIndex(
@@ -40,9 +40,10 @@ export const TaskProvider = ({ children }: ProviderProps) => {
 	}) => {
 		if (!hasAtLeastTwoWords(newTaskDescription)) {
 			throw new Error(
-				"An error has occurred: task description must have at least two words"
+				`An error has occurred: task description must have at least two words.`
 			);
 		}
+
 		const newTaskToAdd: TaskProps = {
 			id: uuidv4(),
 			createdAt: new Date(),

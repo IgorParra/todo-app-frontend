@@ -10,12 +10,10 @@ export const Header = () => {
 	return (
 		<header className={headerContainer}>
 			<div>
-				<a href="/">
-					<img
-						src={CogiaLogo}
-						alt="cogia logo composed by a butterfly and 'cogia intelligence' written on right"
-					/>
-				</a>
+				<img
+					src={CogiaLogo}
+					alt="cogia logo composed by a butterfly and 'cogia intelligence' written on right"
+				/>
 
 				<nav>
 					<IoIosSettings color={"var(--white)"} />

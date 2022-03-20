@@ -7,10 +7,11 @@ type CardOptionsButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 	canEdit?: boolean;
 };
 
-export const CardOptionsButton = ({
+export const CardOptionButton = ({
 	canEdit,
 	onClick,
 	buttonType = "moreinfo",
+	...rest
 }: CardOptionsButtonProps) => {
 	const buttonIcons = {
 		saveoredit: canEdit ? <FiSave /> : <FiEdit />,
@@ -19,7 +20,7 @@ export const CardOptionsButton = ({
 	};
 
 	return (
-		<button className={styles[buttonType]} onClick={onClick}>
+		<button className={styles[buttonType]} onClick={onClick} {...rest}>
 			{buttonIcons[buttonType]}
 		</button>
 	);

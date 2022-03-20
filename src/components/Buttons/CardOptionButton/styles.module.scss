@@ -13,39 +13,39 @@
 }
 
 .moreinfo {
-	border-color: blue;
+	border-color: var(--blue-300);
 	svg {
-		color: blue;
+		color: var(--blue-300);
 	}
 
 	&:hover {
-		background-color: blue;
+		background-color: var(--blue-300);
 		svg {
 			color: white;
 		}
 	}
 }
 .delete {
-	border-color: red;
+	border-color: var(--red-500);
 	svg {
-		color: red;
+		color: var(--red-500);
 	}
 
 	&:hover {
-		background-color: red;
+		background-color: var(--red-500);
 		svg {
 			color: white;
 		}
 	}
 }
 .saveoredit {
-	border-color: green;
+	border-color: var(--green-500);
 	svg {
-		color: green;
+		color: var(--green-500);
 	}
 
 	&:hover {
-		background-color: green;
+		background-color: var(--green-500);
 		svg {
 			color: white;
 		}

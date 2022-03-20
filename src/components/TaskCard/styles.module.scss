@@ -37,5 +37,12 @@
 			font-size: 0.7rem;
 			color: var(--gray-300);
 		}
+
+		.cardOptionButtonContainer {
+			display: flex;
+			margin-top: auto;
+			margin-left: auto;
+			gap: 10px;
+		}
 	}
 }

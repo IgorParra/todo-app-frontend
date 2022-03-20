@@ -1,20 +1,23 @@
 import { useState } from "react";
-import { TaskProps } from "context/types";
+import { TaskProps } from "context/TaskContext/types";
 import styles from "./styles.module.scss";
 import { dateFormat } from "utils/date";
-import { useTask } from "hooks";
+import { useFocus, useTask } from "hooks";
 
-import { CardOptionsButton } from "components/Buttons";
+import { CardOptionButton } from "components/Buttons";
+import { useModal } from "hooks/useModal";
 
 export const TaskCard = ({ task }: { task: TaskProps }) => {
-	const { taskCard } = styles;
+	const { taskCard, cardOptionButtonContainer } = styles;
 	const { id } = task;
 
 	const { changeASingleTaskData } = useTask();
+	const { openModal } = useModal();
 	const [canEdit, setCanEdit] = useState(false);
 	const [newTaskDescription, setNewTaskDescription] = useState(
 		task.description
 	);
+	const [ref] = useFocus<HTMLInputElement>();
 
 	const dateFormatProps = { locales: "pt-PT", value: task.createdAt };
 
@@ -29,11 +32,14 @@ export const TaskCard = ({ task }: { task: TaskProps }) => {
 		});
 	};
 
+	const handleDeleteTask = () => {};
+
 	return (
 		<li className={taskCard}>
 			<section>
 				{canEdit ? (
 					<input
+						ref={ref}
 						value={newTaskDescription}
 						onChange={(element) => setNewTaskDescription(element.target.value)}
 					/>
@@ -42,16 +48,10 @@ export const TaskCard = ({ task }: { task: TaskProps }) => {
 				)}
 				<p>Created at: {dateFormat(dateFormatProps)}</p>
 
-				<div
-					style={{
-						display: "flex",
-						marginTop: "auto",
-						marginLeft: "auto",
-						gap: "10px",
-					}}
-				>
-					<CardOptionsButton
+				<div className={cardOptionButtonContainer}>
+					<CardOptionButton
 						canEdit={canEdit}
+						title={canEdit ? "Save changes" : "Edit task title"}
 						onClick={() => {
 							if (canEdit) {
 								handleOnClickSaveButton();
@@ -61,17 +61,14 @@ export const TaskCard = ({ task }: { task: TaskProps }) => {
 						buttonType="saveoredit"
 					/>
 
-					<CardOptionsButton
-						onClick={() => {
-							if (canEdit) {
-								handleOnClickSaveButton();
-							}
-							setCanEdit(!canEdit);
-						}}
+					<CardOptionButton
+						title="Delete this task"
+						onClick={() => handleDeleteTask()}
 						buttonType="delete"
 					/>
 
-					<CardOptionsButton
+					<CardOptionButton
+						title="See details of this task"
 						onClick={() => {
 							if (canEdit) {
 								handleOnClickSaveButton();

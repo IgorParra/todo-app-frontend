@@ -1,13 +1,18 @@
 import { createContext, useState } from "react";
-import { AuthProviderProps, ProviderProps, UserProps } from "./types";
+import { ProviderProps } from "../types";
+import { AuthProviderProps, UserProps } from "./ types";
 
 export const AuthContext = createContext({} as AuthProviderProps);
 
 export const AuthProvider = ({ children }: ProviderProps) => {
 	const [user, setUser] = useState<UserProps | null>(null);
 
+	const changeUser = (user: UserProps) => {
+		setUser(user);
+	};
+
 	return (
-		<AuthContext.Provider value={{ user, setUser }}>
+		<AuthContext.Provider value={{ user, changeUser }}>
 			{children}
 		</AuthContext.Provider>
 	);

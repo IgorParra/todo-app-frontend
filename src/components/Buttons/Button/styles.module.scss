@@ -1,0 +1,11 @@
+@use "styles/_sassVariables";
+
+.container {
+	height: 2.3rem;
+
+	padding: 0.5rem;
+
+	border-radius: 4px;
+	color: var(--white);
+	border: none;
+}

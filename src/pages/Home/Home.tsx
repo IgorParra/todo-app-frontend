@@ -2,16 +2,20 @@ import { ChangeEvent, useState } from "react";
 import { Header, TaskList, AddNewTaskCard } from "components";
 import { useTask } from "hooks";
 import styles from "./styles.module.scss";
+import { toast } from "react-toastify";
 
 export const Home = () => {
-	const { container, taskListContainer, taskList } = styles;
+	const { container, taskListContainer, taskListTitle } = styles;
 	const { addNewTaskToTaskList } = useTask();
 	const [taskDescription, setTaskDescription] = useState<string>("");
 
-	const handleAddNewTask = async () => {
+	const handleAddNewTask = async (taskDescription: string) => {
 		try {
-			addNewTaskToTaskList({ newTaskDescription: taskDescription });
-		} catch (e: any) {}
+			await addNewTaskToTaskList({ newTaskDescription: taskDescription });
+			setTaskDescription("");
+		} catch (e: any) {
+			toast.error(e.message);
+		}
 	};
 
 	const handleOnInputChange = (element: ChangeEvent<HTMLTextAreaElement>) => {
@@ -24,13 +28,16 @@ export const Home = () => {
 	return (
 		<main className={container}>
 			<Header />
+
 			<div className={taskListContainer}>
+				<h1>Add a new task to the list</h1>
 				<AddNewTaskCard
-					title="Add new task to list"
-					onClick={handleAddNewTask}
+					value={taskDescription}
+					onClick={() => handleAddNewTask(taskDescription)}
 					onChange={(element) => handleOnInputChange(element)}
 				/>
-				<TaskList className={taskList} title={"Tasklist"} />
+				<h1 className={taskListTitle}>Your tasks</h1>
+				<TaskList title={"Tasklist"} />
 			</div>
 		</main>
 	);
