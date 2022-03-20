@@ -1,11 +1,11 @@
 import { ChangeEvent, useState } from "react";
-import { Header, TaskList, AddNewTaskCard } from "components";
+import { TaskList, AddNewTaskCard, Page } from "components";
 import { useTask } from "hooks";
 import styles from "./styles.module.scss";
 import { toast } from "react-toastify";
 
 export const Home = () => {
-	const { container, taskListContainer, taskListTitle } = styles;
+	const { taskListContainer, taskListTitle } = styles;
 	const { addNewTaskToTaskList } = useTask();
 	const [taskDescription, setTaskDescription] = useState<string>("");
 
@@ -26,10 +26,8 @@ export const Home = () => {
 	};
 
 	return (
-		<main className={container}>
-			<Header />
-
-			<div className={taskListContainer}>
+		<Page>
+			<section className={taskListContainer}>
 				<h1>Add a new task to the list</h1>
 				<AddNewTaskCard
 					value={taskDescription}
@@ -38,7 +36,7 @@ export const Home = () => {
 				/>
 				<h1 className={taskListTitle}>Your tasks</h1>
 				<TaskList title={"Tasklist"} />
-			</div>
-		</main>
+			</section>
+		</Page>
 	);
 };

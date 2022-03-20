@@ -1,0 +1,20 @@
+@use "styles/_sassVariables";
+
+.container {
+	flex-direction: column;
+	@include sassVariables.flexJustifyCenter;
+
+	label {
+		margin-bottom: 0.5rem;
+		color: var(--gray-300);
+	}
+
+	input {
+		border-radius: 8px;
+
+		background-color: var(--gray-100);
+
+		border: none;
+		padding: 0.8rem;
+	}
+}

@@ -18,7 +18,7 @@ export const TaskContext = createContext({} as TaskProviderProps);
 export const TaskProvider = ({ children }: ProviderProps) => {
 	// since we don't have login, gonna use localStorage instead of sessionStorage
 	const [taskList, setTaskList] = useState<TaskProps[] | []>(
-		getLocalStorageItem("cogia-tasklist")
+		getLocalStorageItem("cogia-tasklist") || []
 	);
 
 	const changeASingleTaskData = ({
