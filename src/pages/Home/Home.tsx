@@ -1,5 +1,6 @@
 import { ChangeEvent, useState } from "react";
-import { TaskList, AddNewTaskCard, Page } from "components";
+import { AddNewTaskCard, CommonPage } from "components";
+import { TaskList } from "./TaskList";
 import { useTask } from "hooks";
 import styles from "./styles.module.scss";
 import { toast } from "react-toastify";
@@ -26,7 +27,7 @@ export const Home = () => {
 	};
 
 	return (
-		<Page>
+		<CommonPage>
 			<section className={taskListContainer}>
 				<h1>Add a new task to the list</h1>
 				<AddNewTaskCard
@@ -35,8 +36,8 @@ export const Home = () => {
 					onChange={(element) => handleOnInputChange(element)}
 				/>
 				<h1 className={taskListTitle}>Your tasks</h1>
-				<TaskList title={"Tasklist"} />
+				<TaskList />
 			</section>
-		</Page>
+		</CommonPage>
 	);
 };

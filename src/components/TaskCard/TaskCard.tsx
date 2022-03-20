@@ -10,9 +10,13 @@ import { useModal } from "hooks/useModal";
 import { toast } from "react-toastify";
 
 export const TaskCard = ({ task }: { task: TaskProps }) => {
-	const { taskCard, cardOptionButtonContainer } = styles;
-	const { id } = task;
-
+	const {
+		anotherTasks,
+		taskCard,
+		cardOptionButtonContainer,
+		subtaskContainer,
+	} = styles;
+	const { id, description, subtasks } = task;
 	const { changeASingleTaskData, removeTaskFromList } = useTask();
 	const { openModal, changeDialogueWindowData, closeModal } = useModal();
 	const [canEdit, setCanEdit] = useState(false);
@@ -65,10 +69,39 @@ export const TaskCard = ({ task }: { task: TaskProps }) => {
 						onChange={(element) => setNewTaskDescription(element.target.value)}
 					/>
 				) : (
-					<header>{task.description}</header>
+					<header>{description}</header>
 				)}
 				<p>Created at: {dateFormat(dateFormatProps)}</p>
-
+				{/* TODO: try to refactor this */}
+				{subtasks && (
+					<>
+						{" "}
+						<form className={subtaskContainer}>
+							{subtasks?.flatMap((subtask, index) => {
+								return (
+									index <= 2 && (
+										<div>
+											{!subtask.isConcluded && (
+												<input type="checkbox" value={"oi"} />
+											)}
+											<p> {subtask.description}</p>
+										</div>
+									)
+								);
+							})}
+						</form>
+						{subtasks && subtasks.length > 3 && (
+							<NavLink
+								className={anotherTasks}
+								to={`/details?taskId=${task.id}`}
+								state={{ id: task.id }}
+							>
+								+ {subtasks.length - 3}{" "}
+								{subtasks.length - 3 == 1 ? "subtask" : "subtasks"}
+							</NavLink>
+						)}
+					</>
+				)}
 				<div className={cardOptionButtonContainer}>
 					<CardOptionButton
 						canEdit={canEdit}

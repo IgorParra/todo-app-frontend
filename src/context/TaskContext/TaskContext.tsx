@@ -21,25 +21,6 @@ export const TaskProvider = ({ children }: ProviderProps) => {
 		getLocalStorageItem("cogia-tasklist") || []
 	);
 
-	const changeASingleTaskData = ({
-		taskId,
-		newTaskData,
-	}: ChangeASingleTaskDataProps) => {
-		const { description } = newTaskData;
-		const newTaskList = lodash.cloneDeep(taskList);
-		const tasktToUpdateIndex = newTaskList.findIndex(
-			(task) => task.id === taskId
-		);
-
-		if (tasktToUpdateIndex >= 0) {
-			newTaskList[tasktToUpdateIndex] = {
-				...newTaskList[tasktToUpdateIndex],
-				description,
-			};
-		}
-		setTaskList(newTaskList);
-	};
-
 	const addNewTaskToTaskList = ({
 		newTaskDescription,
 	}: {
@@ -56,11 +37,52 @@ export const TaskProvider = ({ children }: ProviderProps) => {
 			createdAt: new Date(),
 			status: "pending",
 			description: newTaskDescription,
+			subtasks: [
+				{
+					id: "1",
+					description: "sujar casa",
+					isConcluded: false,
+				},
+				{
+					id: "2",
+					description: "limpar casa",
+					isConcluded: false,
+				},
+				{
+					id: "3",
+					description: "limpar",
+					isConcluded: false,
+				},
+				{
+					id: "4",
+					description: "casa",
+					isConcluded: false,
+				},
+			],
 		};
 		const newTaskList: TaskProps[] = lodash.cloneDeep(taskList);
 
 		newTaskList.push(newTaskToAdd);
 
+		setTaskList(newTaskList);
+	};
+
+	const changeASingleTaskData = ({
+		taskId,
+		newTaskData,
+	}: ChangeASingleTaskDataProps) => {
+		const { description } = newTaskData;
+		const newTaskList = lodash.cloneDeep(taskList);
+		const tasktToUpdateIndex = newTaskList.findIndex(
+			(task) => task.id === taskId
+		);
+
+		if (tasktToUpdateIndex >= 0) {
+			newTaskList[tasktToUpdateIndex] = {
+				...newTaskList[tasktToUpdateIndex],
+				description,
+			};
+		}
 		setTaskList(newTaskList);
 	};
 

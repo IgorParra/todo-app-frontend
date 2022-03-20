@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQueryParams, useTask } from "hooks";
-import { Page, Input } from "components";
+import { CommonPage, Input } from "components";
 import { dateFormat } from "utils";
 import styles from "./styles.module.scss";
 
@@ -19,10 +19,10 @@ export const Details = (props: any) => {
 		if (taskId == null) {
 			navigate("/");
 		}
-	}, []);
+	}, [taskId, navigate]);
 
 	return (
-		<Page>
+		<CommonPage>
 			<article className={container}>
 				<h1>Task Details</h1>
 				{task && (
@@ -43,6 +43,6 @@ export const Details = (props: any) => {
 					</section>
 				)}
 			</article>
-		</Page>
+		</CommonPage>
 	);
 };

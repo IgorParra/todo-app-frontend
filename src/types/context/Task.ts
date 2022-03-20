@@ -3,7 +3,10 @@ export type TaskProps = {
 	description: string;
 	createdAt: Date;
 	status: "pending" | "concluded";
+	subtasks?: SubTaskProps[];
 };
+
+type SubTaskProps = { id: string; description: string; isConcluded: false };
 
 export type TaskProviderProps = {
 	taskList: TaskProps[] | [];
