@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { NavLink } from "react-router-dom";
 import { TaskProps } from "types/context/Task";
 import styles from "./styles.module.scss";
 import { dateFormat } from "utils/date";
@@ -31,6 +32,8 @@ export const TaskCard = ({ task }: { task: TaskProps }) => {
 			taskId: id,
 			newTaskData: { description: newTaskDescription },
 		});
+
+		toast.success("Task description successfully changed!");
 	};
 
 	const handleDeleteTask = async () => {
@@ -85,16 +88,12 @@ export const TaskCard = ({ task }: { task: TaskProps }) => {
 						buttonType="delete"
 					/>
 
-					<CardOptionButton
-						title="See details of this task"
-						onClick={() => {
-							if (canEdit) {
-								handleOnClickSaveButton();
-							}
-							setCanEdit(!canEdit);
-						}}
-						buttonType="moreinfo"
-					/>
+					<NavLink to={`/details?taskId=${task.id}`} state={{ id: task.id }}>
+						<CardOptionButton
+							title="See details of this task"
+							buttonType="moreinfo"
+						/>
+					</NavLink>
 				</div>
 			</section>
 		</li>

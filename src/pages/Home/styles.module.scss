@@ -1,40 +1,13 @@
 @use "styles/_sassVariables";
 
-.container {
-	min-height: 100%;
-	background-color: var(--gray-100);
-
-	display: grid;
-	grid-template-rows: 12.5rem 1fr;
-
-	h1 {
-		padding-left: 0.3125rem;
-		color: var(--white);
-
-		@media screen and (max-width: sassVariables.$mobileWidth) {
-			text-align: center;
-		}
+.taskListContainer {
+	@media screen and (max-width: sassVariables.$mobileWidth) {
+		top: -4.9rem;
 	}
 
 	.taskListTitle {
 		color: var(--blue-300);
 		margin-top: 2rem;
 		text-align: left;
-	}
-
-	.taskListContainer {
-		width: 100%;
-		height: calc(100% - 12.5rem);
-		max-width: var(--max-width);
-
-		top: -4.6rem;
-		position: relative;
-		margin: 0 auto;
-
-		padding: 0 1.25rem;
-
-		@media screen and (max-width: sassVariables.$mobileWidth) {
-			top: -4.9rem;
-		}
 	}
 }
