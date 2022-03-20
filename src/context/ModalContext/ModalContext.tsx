@@ -1,8 +1,5 @@
 import { createContext, useState } from "react";
-import {
-	ChangeDialogueWindowCallbackProps,
-	ModalProdiverProps,
-} from "types/context/Modal";
+import { ModalProdiverProps } from "types/context/Modal";
 import { ProviderProps } from "../types";
 import { DialogueWindow } from "./DialogueWindow/DialogueWindow";
 import styles from "./styles.module.scss";
@@ -13,41 +10,26 @@ export const ModalProdiver = ({ children }: ProviderProps) => {
 	const { modalContainer, modalLayer } = styles;
 	const [modalIsOpen, setModalIsOpen] = useState(false);
 	const [dialogueWindowData, setDialogueWindowData] = useState({
-		title: "",
-		description: "",
+		message: { title: "", description: "" },
 		onConfirm: () => {},
 		onDenied: () => {},
 	});
-	const { title, description, onConfirm, onDenied } = dialogueWindowData;
+	const { message, onConfirm, onDenied } = dialogueWindowData;
 
 	const openModal = () => setModalIsOpen(true);
 	const closeModal = () => setModalIsOpen(false);
+
 	const changeDialogueWindowData = ({
-		title,
-		description,
+		message,
 		onConfirm,
 		onDenied,
 	}: typeof dialogueWindowData) =>
-		setDialogueWindowData({ title, description, onConfirm, onDenied });
-
-	const changeDialogueWindowCallback = ({
-		onConfirm,
-		onDenied,
-	}: ChangeDialogueWindowCallbackProps) => {
-		setDialogueWindowData((prevState) => ({
-			...prevState,
-			onConfirm,
-			onDenied,
-		}));
-	};
+		setDialogueWindowData({ message, onConfirm, onDenied });
 
 	const modals = {
 		dialogueWindow: (
 			<DialogueWindow
-				message={{
-					title: title,
-					description: description,
-				}}
+				message={message}
 				closeModalFunction={closeModal}
 				onConfirm={onConfirm}
 				onDenied={onDenied}
@@ -58,7 +40,6 @@ export const ModalProdiver = ({ children }: ProviderProps) => {
 	return (
 		<ModalContext.Provider
 			value={{
-				changeDialogueWindowCallback,
 				changeDialogueWindowData,
 				closeModal,
 				openModal,

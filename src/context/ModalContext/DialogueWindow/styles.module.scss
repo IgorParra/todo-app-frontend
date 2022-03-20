@@ -10,6 +10,10 @@
 		@include sassVariables.flexItemsCenter;
 		justify-content: space-between;
 
+		h1 {
+			margin-right: 2rem;
+		}
+
 		button {
 			width: 1.9rem;
 			height: auto;

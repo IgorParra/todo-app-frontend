@@ -1,18 +1,25 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { ProviderProps } from "../types";
 import lodash from "lodash";
 import { v4 as uuidv4 } from "uuid";
-import { hasAtLeastTwoWords } from "utils/hasAtLeastTwoWords";
 import {
 	ChangeASingleTaskDataProps,
 	TaskProps,
 	TaskProviderProps,
-} from "./types";
+} from "types/context/Task";
+import {
+	getLocalStorageItem,
+	setLocalStorageItem,
+	hasAtLeastTwoWords,
+} from "utils/";
 
 export const TaskContext = createContext({} as TaskProviderProps);
 
 export const TaskProvider = ({ children }: ProviderProps) => {
-	const [taskList, setTaskList] = useState<TaskProps[] | []>([]);
+	// since we don't have login, gonna use localStorage instead of sessionStorage
+	const [taskList, setTaskList] = useState<TaskProps[] | []>(
+		getLocalStorageItem("cogia-tasklist")
+	);
 
 	const changeASingleTaskData = ({
 		taskId,
@@ -57,9 +64,29 @@ export const TaskProvider = ({ children }: ProviderProps) => {
 		setTaskList(newTaskList);
 	};
 
+	const removeTaskFromList = (taskId: string) => {
+		const newTaskList = lodash.cloneDeep(taskList);
+		const indexofTaskToDelete = newTaskList.findIndex(
+			(task) => task.id === taskId
+		);
+
+		newTaskList.splice(indexofTaskToDelete, 1);
+
+		setTaskList(newTaskList);
+	};
+
+	useEffect(() => {
+		setLocalStorageItem({ key: "cogia-tasklist", value: taskList });
+	}, [taskList]);
+
 	return (
 		<TaskContext.Provider
-			value={{ taskList, changeASingleTaskData, addNewTaskToTaskList }}
+			value={{
+				addNewTaskToTaskList,
+				changeASingleTaskData,
+				removeTaskFromList,
+				taskList,
+			}}
 		>
 			{children}
 		</TaskContext.Provider>

@@ -1,18 +1,19 @@
 import { useState } from "react";
-import { TaskProps } from "context/TaskContext/types";
+import { TaskProps } from "types/context/Task";
 import styles from "./styles.module.scss";
 import { dateFormat } from "utils/date";
 import { useFocus, useTask } from "hooks";
 
 import { CardOptionButton } from "components/Buttons";
 import { useModal } from "hooks/useModal";
+import { toast } from "react-toastify";
 
 export const TaskCard = ({ task }: { task: TaskProps }) => {
 	const { taskCard, cardOptionButtonContainer } = styles;
 	const { id } = task;
 
-	const { changeASingleTaskData } = useTask();
-	const { openModal } = useModal();
+	const { changeASingleTaskData, removeTaskFromList } = useTask();
+	const { openModal, changeDialogueWindowData, closeModal } = useModal();
 	const [canEdit, setCanEdit] = useState(false);
 	const [newTaskDescription, setNewTaskDescription] = useState(
 		task.description
@@ -32,7 +33,24 @@ export const TaskCard = ({ task }: { task: TaskProps }) => {
 		});
 	};
 
-	const handleDeleteTask = () => {};
+	const handleDeleteTask = async () => {
+		changeDialogueWindowData({
+			message: {
+				title: "Hold on!",
+				description: "You're about to delete a task, are you sure about it?",
+			},
+			onConfirm: () => {
+				removeTaskFromList(task.id);
+				toast.success(`Task successfully removed`);
+				closeModal();
+			},
+			onDenied: () => {
+				toast.error(`Task not deleted: action canceled`);
+				closeModal();
+			},
+		});
+		openModal();
+	};
 
 	return (
 		<li className={taskCard}>

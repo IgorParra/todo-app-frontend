@@ -1,16 +1,10 @@
 export type ChangeDialogueWindowCallbackProps = {
 	onConfirm: () => any;
-	onDenied: () => any;
 };
 
 export type ModalProdiverProps = {
-	changeDialogueWindowCallback: ({
-		onConfirm,
-		onDenied,
-	}: ChangeDialogueWindowCallbackProps) => void;
 	changeDialogueWindowData: ({
-		title,
-		description,
+		message,
 		onConfirm,
 		onDenied,
 	}: ChangeDialogueWindowDataProps) => void;
@@ -19,8 +13,7 @@ export type ModalProdiverProps = {
 };
 
 export type ChangeDialogueWindowDataProps = {
-	title: string;
-	description: string;
+	message: { title: string; description: string };
 	onConfirm: () => any;
 	onDenied: () => any;
 };

@@ -16,6 +16,7 @@ export type TaskProviderProps = {
 	}: {
 		newTaskDescription: string;
 	}) => void;
+	removeTaskFromList: (taskId: string) => void;
 };
 
 export type NewTaskDataProps = Pick<TaskProps, "description">;

@@ -20,6 +20,7 @@ export const DialogueWindow = ({
 	onDenied,
 }: DialogueWindowProps) => {
 	const { actionButtonsContainer, container, dialogueDescription } = styles;
+
 	return (
 		<div className={container}>
 			<header>
@@ -31,7 +32,11 @@ export const DialogueWindow = ({
 			<p className={dialogueDescription}>{description}</p>
 			<div className={actionButtonsContainer}>
 				<Button theme="danger" label="No, I'm not sure" onClick={onDenied} />
-				<Button theme="success" label="Yes, I wann do it" onClick={onConfirm} />
+				<Button
+					theme="success"
+					label="Yes, I wanna do it"
+					onClick={onConfirm}
+				/>
 			</div>
 		</div>
 	);
