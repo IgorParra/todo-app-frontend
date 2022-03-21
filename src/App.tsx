@@ -4,7 +4,7 @@ import { RoutePaths } from "routes";
 export const App = () => {
 	return (
 		<AppProvider>
-			<RoutePaths />
+			<div>Hello</div>
 		</AppProvider>
 	);
 };
