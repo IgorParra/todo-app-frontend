@@ -5,6 +5,15 @@
 		top: -4.9rem;
 	}
 
+	h1 {
+		padding-left: 0.3125rem;
+		color: var(--white);
+
+		@media screen and (max-width: sassVariables.$mobileWidth) {
+			text-align: center;
+		}
+	}
+
 	.taskListTitle {
 		color: var(--blue-300);
 		margin-top: 2rem;

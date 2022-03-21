@@ -1,9 +1,16 @@
 import { ButtonHTMLAttributes } from "react";
-import { FiEdit, FiSave, FiTrash2, FiPlus } from "react-icons/fi";
+import {
+	FiEdit,
+	FiSave,
+	FiTrash2,
+	FiPlus,
+	FiRefreshCw,
+	FiCheck,
+} from "react-icons/fi";
 import styles from "./styles.module.scss";
 
 type CardOptionsButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-	buttonType: "saveoredit" | "delete" | "moreinfo";
+	buttonType: "saveoredit" | "delete" | "moreinfo" | "revert" | "concluded";
 	canEdit?: boolean;
 };
 
@@ -17,6 +24,8 @@ export const CardOptionButton = ({
 		saveoredit: canEdit ? <FiSave /> : <FiEdit />,
 		delete: <FiTrash2 />,
 		moreinfo: <FiPlus />,
+		revert: <FiRefreshCw />,
+		concluded: <FiCheck />,
 	};
 
 	return (

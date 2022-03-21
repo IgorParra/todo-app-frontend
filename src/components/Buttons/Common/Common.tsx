@@ -6,7 +6,7 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 	label: string | JSX.Element;
 };
 
-export const Button = ({ theme, label, ...rest }: ButtonProps) => {
+export const Common = ({ theme, label, ...rest }: ButtonProps) => {
 	const { container } = styles;
 	return (
 		<button

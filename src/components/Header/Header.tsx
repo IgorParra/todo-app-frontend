@@ -3,6 +3,7 @@ import styles from "./styles.module.scss";
 
 import CogiaLogo from "assets/images/cogia-logo.png";
 import Profile from "assets/images/profile-picture.jpg";
+import { NavLink } from "react-router-dom";
 
 export const Header = () => {
 	const { headerContainer, notifyIcon, notifyIconContainer, profileIcon } =
@@ -10,11 +11,12 @@ export const Header = () => {
 	return (
 		<header className={headerContainer}>
 			<div>
-				<img
-					src={CogiaLogo}
-					alt="cogia logo composed by a butterfly and 'cogia intelligence' written on right"
-				/>
-
+				<NavLink to={`/`}>
+					<img
+						src={CogiaLogo}
+						alt="cogia logo composed by a butterfly and 'cogia intelligence' written on right"
+					/>
+				</NavLink>
 				<nav>
 					<IoIosSettings color={"var(--white)"} />
 					<div className={notifyIconContainer}>

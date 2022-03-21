@@ -3,22 +3,23 @@ export type TaskProps = {
 	description: string;
 	createdAt: Date;
 	status: "pending" | "concluded";
-	subtasks?: SubTaskProps[];
+	subTasks: SubTaskProps[];
 };
 
-type SubTaskProps = { id: string; description: string; isConcluded: false };
+export type SubTaskProps = {
+	id: string;
+	description: string;
+	isConcluded: boolean;
+};
 
 export type TaskProviderProps = {
 	taskList: TaskProps[] | [];
-	changeASingleTaskData: ({
-		taskId,
-		newTaskData,
-	}: ChangeASingleTaskDataProps) => void;
 	addNewTaskToTaskList: ({
-		newTaskDescription,
-	}: {
-		newTaskDescription: string;
-	}) => void;
+		description,
+		subTasks,
+	}: Pick<TaskProps, "description" | "subTasks">) => void;
+	changeASingleTaskData: (task: TaskProps) => void;
+
 	removeTaskFromList: (taskId: string) => void;
 };
 

@@ -2,16 +2,8 @@ import { createContext, useEffect, useState } from "react";
 import { ProviderProps } from "../types";
 import lodash from "lodash";
 import { v4 as uuidv4 } from "uuid";
-import {
-	ChangeASingleTaskDataProps,
-	TaskProps,
-	TaskProviderProps,
-} from "types/context/Task";
-import {
-	getLocalStorageItem,
-	setLocalStorageItem,
-	hasAtLeastTwoWords,
-} from "utils/";
+import { TaskProps, TaskProviderProps } from "types/context/Task";
+import { getLocalStorageItem, setLocalStorageItem } from "utils/";
 
 export const TaskContext = createContext({} as TaskProviderProps);
 
@@ -22,13 +14,12 @@ export const TaskProvider = ({ children }: ProviderProps) => {
 	);
 
 	const addNewTaskToTaskList = ({
-		newTaskDescription,
-	}: {
-		newTaskDescription: string;
-	}) => {
-		if (!hasAtLeastTwoWords(newTaskDescription)) {
+		description,
+		subTasks,
+	}: Pick<TaskProps, "description" | "subTasks">) => {
+		if (description === "" || subTasks.length === 0) {
 			throw new Error(
-				`An error has occurred: task description must have at least two words.`
+				"An error has occurred: neither description or subtasks can't be void, please, verify those fields."
 			);
 		}
 
@@ -36,29 +27,8 @@ export const TaskProvider = ({ children }: ProviderProps) => {
 			id: uuidv4(),
 			createdAt: new Date(),
 			status: "pending",
-			description: newTaskDescription,
-			subtasks: [
-				{
-					id: "1",
-					description: "sujar casa",
-					isConcluded: false,
-				},
-				{
-					id: "2",
-					description: "limpar casa",
-					isConcluded: false,
-				},
-				{
-					id: "3",
-					description: "limpar",
-					isConcluded: false,
-				},
-				{
-					id: "4",
-					description: "casa",
-					isConcluded: false,
-				},
-			],
+			description,
+			subTasks,
 		};
 		const newTaskList: TaskProps[] = lodash.cloneDeep(taskList);
 
@@ -67,21 +37,14 @@ export const TaskProvider = ({ children }: ProviderProps) => {
 		setTaskList(newTaskList);
 	};
 
-	const changeASingleTaskData = ({
-		taskId,
-		newTaskData,
-	}: ChangeASingleTaskDataProps) => {
-		const { description } = newTaskData;
+	const changeASingleTaskData = (task: TaskProps) => {
+		const { id } = task;
 		const newTaskList = lodash.cloneDeep(taskList);
-		const tasktToUpdateIndex = newTaskList.findIndex(
-			(task) => task.id === taskId
-		);
+
+		const tasktToUpdateIndex = newTaskList.findIndex((task) => task.id === id);
 
 		if (tasktToUpdateIndex >= 0) {
-			newTaskList[tasktToUpdateIndex] = {
-				...newTaskList[tasktToUpdateIndex],
-				description,
-			};
+			newTaskList[tasktToUpdateIndex] = task;
 		}
 		setTaskList(newTaskList);
 	};

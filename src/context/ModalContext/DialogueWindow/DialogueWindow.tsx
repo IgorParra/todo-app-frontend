@@ -1,4 +1,4 @@
-import { Button } from "components";
+import { Common } from "components";
 import styles from "./styles.module.scss";
 
 import { FiX } from "react-icons/fi";
@@ -31,8 +31,8 @@ export const DialogueWindow = ({
 			</header>
 			<p className={dialogueDescription}>{description}</p>
 			<div className={actionButtonsContainer}>
-				<Button theme="danger" label="No, I'm not sure" onClick={onDenied} />
-				<Button
+				<Common theme="danger" label="No, I'm not sure" onClick={onDenied} />
+				<Common
 					theme="success"
 					label="Yes, I wanna do it"
 					onClick={onConfirm}

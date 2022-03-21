@@ -1,28 +1,26 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
 import { TaskProps } from "types/context/Task";
 import styles from "./styles.module.scss";
 import { dateFormat } from "utils/date";
 import { useFocus, useTask } from "hooks";
 
-import { CardOptionButton } from "components/Buttons";
 import { useModal } from "hooks/useModal";
 import { toast } from "react-toastify";
+import { SubTaskList } from "components/SubTaskList";
+import { OptionButtons } from "./OptionButtons";
+import { NavLink } from "react-router-dom";
 
 export const TaskCard = ({ task }: { task: TaskProps }) => {
-	const {
-		anotherTasks,
-		taskCard,
-		cardOptionButtonContainer,
-		subtaskContainer,
-	} = styles;
-	const { id, description, subtasks } = task;
+	const { taskCard, cardOptionButtonContainer, concluded } = styles;
+	const { description, subTasks } = task;
 	const { changeASingleTaskData, removeTaskFromList } = useTask();
 	const { openModal, changeDialogueWindowData, closeModal } = useModal();
 	const [canEdit, setCanEdit] = useState(false);
+
 	const [newTaskDescription, setNewTaskDescription] = useState(
 		task.description
 	);
+
 	const [ref] = useFocus<HTMLInputElement>();
 
 	const dateFormatProps = { locales: "pt-PT", value: task.createdAt };
@@ -32,10 +30,7 @@ export const TaskCard = ({ task }: { task: TaskProps }) => {
 			return;
 		}
 
-		changeASingleTaskData({
-			taskId: id,
-			newTaskData: { description: newTaskDescription },
-		});
+		changeASingleTaskData({ ...task, description: newTaskDescription });
 
 		toast.success("Task description successfully changed!");
 	};
@@ -59,8 +54,33 @@ export const TaskCard = ({ task }: { task: TaskProps }) => {
 		openModal();
 	};
 
+	const subTaskListCallBack = (data: any) => {
+		changeDialogueWindowData({
+			message: {
+				title: "Hold on!",
+				description: "You're about to delete a subtask, are you sure about it?",
+			},
+			onConfirm: () => {
+				changeASingleTaskData({
+					...task,
+					subTasks: data,
+				});
+				toast.success(`Task successfully removed`);
+				closeModal();
+			},
+			onDenied: () => {
+				toast.error(`SubTask not deleted: action canceled`);
+				closeModal();
+			},
+		});
+		openModal();
+	};
+
+	const maxSubTasksToList = 2;
+	const notListedSubTasks = subTasks.length - maxSubTasksToList;
+
 	return (
-		<li className={taskCard}>
+		<li className={`${taskCard} ${task.status === "concluded" && concluded}`}>
 			<section>
 				{canEdit ? (
 					<input
@@ -72,62 +92,35 @@ export const TaskCard = ({ task }: { task: TaskProps }) => {
 					<header>{description}</header>
 				)}
 				<p>Created at: {dateFormat(dateFormatProps)}</p>
-				{/* TODO: try to refactor this */}
-				{subtasks && (
-					<>
-						{" "}
-						<form className={subtaskContainer}>
-							{subtasks?.flatMap((subtask, index) => {
-								return (
-									index <= 2 && (
-										<div>
-											{!subtask.isConcluded && (
-												<input type="checkbox" value={"oi"} />
-											)}
-											<p> {subtask.description}</p>
-										</div>
-									)
-								);
-							})}
-						</form>
-						{subtasks && subtasks.length > 3 && (
-							<NavLink
-								className={anotherTasks}
-								to={`/details?taskId=${task.id}`}
-								state={{ id: task.id }}
-							>
-								+ {subtasks.length - 3}{" "}
-								{subtasks.length - 3 == 1 ? "subtask" : "subtasks"}
-							</NavLink>
-						)}
-					</>
+				{subTasks && (
+					<SubTaskList
+						list={task.subTasks}
+						callBack={(data) => subTaskListCallBack(data)}
+						compact
+						canCheck={false}
+						maxItems={maxSubTasksToList}
+						style={{ margin: "1rem 0" }}
+					/>
 				)}
-				<div className={cardOptionButtonContainer}>
-					<CardOptionButton
-						canEdit={canEdit}
-						title={canEdit ? "Save changes" : "Edit task title"}
-						onClick={() => {
-							if (canEdit) {
-								handleOnClickSaveButton();
-							}
-							setCanEdit(!canEdit);
-						}}
-						buttonType="saveoredit"
-					/>
 
-					<CardOptionButton
-						title="Delete this task"
-						onClick={() => handleDeleteTask()}
-						buttonType="delete"
-					/>
-
-					<NavLink to={`/details?taskId=${task.id}`} state={{ id: task.id }}>
-						<CardOptionButton
-							title="See details of this task"
-							buttonType="moreinfo"
-						/>
+				{maxSubTasksToList < subTasks.length && (
+					<NavLink
+						to={`/details?taskId=${task.id}`}
+						style={{ color: "var(--blue-300)", marginLeft: "1rem" }}
+					>
+						+ {notListedSubTasks}{" "}
+						{notListedSubTasks > 1 ? "subtasks" : "subtask"}
 					</NavLink>
-				</div>
+				)}
+
+				<OptionButtons
+					canEdit={canEdit}
+					setCanEdit={setCanEdit}
+					onSave={handleOnClickSaveButton}
+					onDelete={handleDeleteTask}
+					task={task}
+					className={cardOptionButtonContainer}
+				/>
 			</section>
 		</li>
 	);

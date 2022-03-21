@@ -3,7 +3,7 @@
 .container {
 	flex-direction: column;
 	@include sassVariables.flexJustifyCenter;
-
+	width: 100%;
 	label {
 		margin-bottom: 0.5rem;
 		color: var(--gray-300);
