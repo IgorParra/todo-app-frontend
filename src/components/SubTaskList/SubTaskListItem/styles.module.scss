@@ -24,8 +24,10 @@
 
 		text-overflow: ellipsis;
 		input {
+			width: 100%;
 			margin-left: 0.5rem;
 			background-color: transparent !important;
+
 			flex: 1;
 			&:disabled {
 				border: none;
@@ -45,14 +47,14 @@
 		gap: 0.5rem;
 
 		height: 100%;
-		width: 3rem;
+		width: 2rem;
 
 		button:first-of-type {
 			color: var(--success);
 		}
 
 		button {
-			width: 3rem;
+			width: 2rem;
 			height: 2rem;
 
 			border: none;

@@ -67,6 +67,8 @@ export const AddNewTaskCardInput = () => {
 			isConcluded: false,
 		};
 
+		console.log(newSubTask);
+
 		setTaskData((prevState) => ({
 			...prevState,
 			subTaskDescription: "",

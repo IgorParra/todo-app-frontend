@@ -54,7 +54,7 @@ export const SubTaskListItem = ({
 			)}
 			<label
 				htmlFor={`task-${subTask.id}`}
-				style={!canCheck ? { textDecoration: "line-through" } : {}}
+				style={subTask.isConcluded ? { textDecoration: "line-through" } : {}}
 			>
 				{subTask.id} -
 				<input

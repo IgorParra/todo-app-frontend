@@ -7,11 +7,14 @@ import styles from "./styles.module.scss";
 import { SubTaskProps, TaskProps } from "types/context/Task";
 import { SubTaskList } from "components";
 import { toast } from "react-toastify";
+import { useModal } from "hooks/useModal";
 
 export const Details = (props: any) => {
 	const { container, buttonsContainer, taskIdAndCreatedAtContainer, title } =
 		styles;
 	const { taskList, changeASingleTaskData } = useTask();
+	const { openModal, changeDialogueWindowData, closeModal } = useModal();
+
 	const params = useQueryParams();
 	const navigate = useNavigate();
 
@@ -33,7 +36,22 @@ export const Details = (props: any) => {
 	};
 
 	const subTaskListCallBack = (data: SubTaskProps[]) => {
-		setNewTaskInfo((prevState) => ({ ...prevState, subTasks: data }));
+		changeDialogueWindowData({
+			message: {
+				title: "Please, confirm this action",
+				description: "Are you sure about this changes?",
+			},
+			onConfirm: () => {
+				setNewTaskInfo((prevState) => ({ ...prevState, subTasks: data }));
+				toast.success("Change done!");
+				closeModal();
+			},
+			onDenied: () => {
+				toast.error(`Action has been canceled`);
+				closeModal();
+			},
+		});
+		openModal();
 	};
 
 	const handleSaveChanges = (taskInfo?: TaskProps) => {
@@ -42,8 +60,22 @@ export const Details = (props: any) => {
 	};
 
 	const handleRevertAllChanges = () => {
-		setNewTaskInfo(task);
-		toast.success("All changes has been reverted");
+		changeDialogueWindowData({
+			message: {
+				title: "Hold on!",
+				description: "You're about to revert ALL CHANGES, it cannot be undone",
+			},
+			onConfirm: () => {
+				setNewTaskInfo(task);
+				toast.success("All changes has been reverted");
+				closeModal();
+			},
+			onDenied: () => {
+				toast.error(`Changes not reverted: action canceled`);
+				closeModal();
+			},
+		});
+		openModal();
 	};
 
 	const handleMarkTaskAsConcluded = () => {
