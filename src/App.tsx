@@ -2,7 +2,11 @@ import AppProvider from "context";
 import { RoutePaths } from "routes";
 
 export const App = () => {
-	return <div>Hello</div>;
+	return (
+		<AppProvider>
+			<RoutePaths />
+		</AppProvider>
+	);
 };
 
 export default App;
